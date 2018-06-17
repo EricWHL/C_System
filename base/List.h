@@ -24,7 +24,7 @@ typedef enum _LIST_OPE_RST {
  ************************************/
 
 typedef struct _Node{
-    void* data;
+    UBYTE data[LIST_DATA_MAX_SIZE];
     struct Node* pre;
     struct Node* next;
 }Node;

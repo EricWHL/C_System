@@ -53,7 +53,7 @@ Node* List_pop(List* list)
     return node;
 }
 
-LIST_OPE_RST List_push(List* list, void* data)
+LIST_OPE_RST List_push(List* list, void* data, UINT size)
 {
     LIST_OPE_RST rst = LIST_OPE_RST_MAX;
 
@@ -79,7 +79,12 @@ LIST_OPE_RST List_push(List* list, void* data)
     }
 
     swp = (Node*)malloc(sizeof(Node));
-    swp->data = data;
+    if(LIST_DATA_MAX_SIZE > size){
+        memcpy(swp->data, data, size);    
+    }
+    else {
+        memcpy(swp->data, data, LIST_DATA_MAX_SIZE);
+    }
     swp->pre = curnode;
     swp->next = NULL;
     curnode->next = swp;
@@ -88,12 +93,12 @@ LIST_OPE_RST List_push(List* list, void* data)
     return rst;    
 }
 
-LIST_OPE_RST List_append(List* list, void* data)
+LIST_OPE_RST List_append(List* list, void* data, UINT size)
 {
-    return List_push(list, data);
+    return List_push(list, data, size);
 }
 
-LIST_OPE_RST List_insert(List* list, UINT index, void* data)
+LIST_OPE_RST List_insert(List* list, UINT index, void* data, UINT size)
 {
     LIST_OPE_RST rst = LIST_OPE_RST_MAX;
     UINT curidx = 0;
@@ -122,7 +127,12 @@ LIST_OPE_RST List_insert(List* list, UINT index, void* data)
         
         if(index == curidx) {
             swp = (Node*)malloc(sizeof(Node));
-            swp->data = data;
+            if(LIST_DATA_MAX_SIZE > size){
+                memcpy(swp->data, data, size);    
+            }
+            else {
+                memcpy(swp->data, data, LIST_DATA_MAX_SIZE);
+            }
             swp->next = node;
             swp->pre = node->pre;
             node->pre = swp;
