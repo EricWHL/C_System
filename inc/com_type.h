@@ -23,4 +23,10 @@ typedef void*          POINTER;
 #define TRUE 1
 #define FALSE 0
 
+/*************************************
+ *pointer type define
+ ************************************/
+
+#define NULL 0
+
 #endif
