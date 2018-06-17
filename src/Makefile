@@ -44,5 +44,5 @@ all: $(OBJS)
 .PHONY: clean
 
 clean:
-	rm -rf *.o *.exe
+	rm -rf *.o *.exe *.bin
 

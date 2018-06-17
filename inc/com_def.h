@@ -1,5 +1,5 @@
-#ifndef _COMMON_DEF_H_
-#define _COMMON_DEF_H_
+#ifndef _COM_DEF_H_
+#define _COM_DEF_H_
 /*************************************
  *enum define
  ************************************/
@@ -20,13 +20,4 @@ typedef struct _object {
 	void (*function)(void* param);
 }st_object;
 
-/*************************************
- *assert define
- ************************************/
-#define ASSERT(exp) \
-	do{ \
-	if(!exp) { \
-        printf("pointer is NULL file is:%s function is:%s line is:%d",__FILE__,__func__,__LINE__); \
-    } \
-}while(0)
 #endif //_COMMON_DEF_H_
