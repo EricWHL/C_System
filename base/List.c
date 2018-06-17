@@ -1,12 +1,16 @@
 #include <malloc.h>
+#include <string.h>
 
 #include "List.h"
 
 
 List* List_Create()
 {
-    List* List = (List*)malloc(sizeof(List));
-    list->node= NULL;
+    List* list = (List*)malloc(sizeof(List));
+
+    list->node = NULL;
+
+    return list;
 }
 
 void List_Destory(List* list)

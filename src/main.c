@@ -7,8 +7,10 @@ static void obj_callback (void* param);
 static void obj_callback (void* param)
 {
 	printf("obj_callback!\n");
+    printf("param %p!\n",param);
 }
-int main (char* argv,char*argc)
+
+int main (int argv, char** argc)
 {
     st_object st_obj;
     char *cp_point = NULL;

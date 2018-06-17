@@ -27,6 +27,4 @@ typedef void*          POINTER;
  *pointer type define
  ************************************/
 
-#define NULL 0
-
 #endif
