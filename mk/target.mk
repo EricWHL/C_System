@@ -8,7 +8,7 @@ CPLF = $(foreach dir, $(SUBDIRS), $(wildcard $(dir)/*.o))
 
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-os.bin:$(OBJS)
+os:$(OBJS)
 	$(CC) $(OBJS) -o $@
 
 %.o:%.c

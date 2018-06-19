@@ -1,4 +1,5 @@
 #include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "List.h"
@@ -8,6 +9,10 @@ List* List_Create()
 {
     List* list = (List*)malloc(sizeof(List));
 
+    if(NULL == list) {
+        return NULL;
+    }
+    
     list->node = NULL;
 
     return list;
