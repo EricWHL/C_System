@@ -3,7 +3,9 @@
 
 #include "com.h"
 
+#include "Module.h"
 #include "List.h"
+
 /*************************************
  *enum define
  ************************************/
