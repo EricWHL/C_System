@@ -1,8 +1,8 @@
 #ifndef _EVENT_LOOP_H_
 #define _EVENT_LOOP_H_
 
-#include "Event.h"
 #include "com.h"
+
 #include "List.h"
 /*************************************
  *enum define
