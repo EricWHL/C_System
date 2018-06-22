@@ -37,6 +37,7 @@ typedef struct _ModuleMgr {
  *functions define
  ************************************/
 void Module_init();
+ModuleMgr* Module_Inst();
 
 void Module_run(Event* event);
 

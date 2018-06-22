@@ -2,11 +2,11 @@ TOP_DIR		= .
 
 LCFLAGS += -I$(TOP_DIR)/base
 LCFLAGS += -I$(TOP_DIR)/inc
-LCFLAGS += -I$(TOP_DIR)/plugins
+LCFLAGS += -I$(TOP_DIR)/core
 
 SUBDIRS		=\
 			base \
-			plugins \
+			core \
 			src\
 
 include $(TOP_DIR)/mk/target.mk

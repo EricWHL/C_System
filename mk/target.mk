@@ -12,7 +12,7 @@ os:$(OBJS)
 	$(CC) $(OBJS) -o $@
 
 %.o:%.c
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c -g $< -o $@ $(CFLAGS)
 
 clean:
 	rm -rf *.bin *.exe $(CPLF)

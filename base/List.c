@@ -80,23 +80,40 @@ LIST_OPE_RST List_push(List* list, void* data, UINT size)
         return rst;
     }
 
-    node = list->node;
-    
-    while(node) {
-        curnode = node;
-        node = node->next;
-    }
+    if(List_isEmpty(list)) {
+        swp = (Node*)malloc(sizeof(Node));
+        if(LIST_DATA_MAX_SIZE > size){
+            memcpy(swp->data, data, size);    
+        }
+        else {
+            memcpy(swp->data, data, LIST_DATA_MAX_SIZE);
+        }
+        swp->pre = NULL;
+        swp->next = NULL;
+        list->node = swp;
 
-    swp = (Node*)malloc(sizeof(Node));
-    if(LIST_DATA_MAX_SIZE > size){
-        memcpy(swp->data, data, size);    
     }
     else {
-        memcpy(swp->data, data, LIST_DATA_MAX_SIZE);
+        node = list->node;
+    
+        while(node) {
+            curnode = node;
+            node = node->next;
+        }
+
+
+        swp = (Node*)malloc(sizeof(Node));
+        if(LIST_DATA_MAX_SIZE > size){
+            memcpy(swp->data, data, size);    
+        }
+        else {
+            memcpy(swp->data, data, LIST_DATA_MAX_SIZE);
+        }
+        swp->pre = curnode;
+        swp->next = NULL;
+        curnode->next = swp;
+        
     }
-    swp->pre = curnode;
-    swp->next = NULL;
-    curnode->next = swp;
     
     rst = LIST_OPE_RST_OK;
     return rst;    

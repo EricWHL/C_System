@@ -28,14 +28,14 @@ typedef struct _EventLoop {
  *Functions define
  ************************************/
 
-EventLoop* EventLoop_Create();
+void EventLoop_Create();
 void EventLoop_Destory();
 
 EventLoop* EventLoop_Inst();
 
 BOOL EventLoop_IsEmpty();
 
-EL_OPE_RST EventLoop_Run();
+void EventLoop_Run();
 EL_OPE_RST EventLoop_Exit();
 
 EL_OPE_RST EventLoop_SendEvent(Event* event);
