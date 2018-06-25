@@ -5,9 +5,13 @@
 
 int main (int argv, char** argc)
 {
-    EventLoop_Create();
-    EventLoop_Run();
-    EventLoop_Exit();
-    return 0;      
-}
 
+    EventLoop_Create();
+
+    EventLoop_Run();
+
+    EventLoop_Exit();
+
+    return 0;      
+
+}

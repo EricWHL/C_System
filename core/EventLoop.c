@@ -3,10 +3,15 @@
 #include <string.h>
 #include <malloc.h>
 
+#include <pthread.h>
+
 #include "EventLoop.h"
 
 static EventLoop* s_loop = NULL;
 static BOOL s_runEnable = FALSE;
+static pthread_t el_threadId;
+
+static void* EventLoop_exe(void* data);
 
 void EventLoop_Create()
 {
@@ -21,6 +26,7 @@ void EventLoop_Create()
     s_runEnable = TRUE;
 
     Module_init();
+    
 }
 
 void EventLoop_Destory()
@@ -41,7 +47,7 @@ BOOL EventLoop_IsEmpty()
     
 }
 
-void EventLoop_Run()
+static void* EventLoop_exe(void* data)
 {
     ModuleMgr* mdMgr = Module_Inst();
     Node* node = NULL;
@@ -50,11 +56,10 @@ void EventLoop_Run()
     
     memset(&evt, 0x00, sizeof(Event));
     printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
-    while(mdMgr) {
+    do {
 
         if(0 == evt_count) {
             Module_run(NULL);
-            sleep(2);
         }
         else {
             while(evt_count) {
@@ -67,8 +72,20 @@ void EventLoop_Run()
                 evt_count --;
             }
         }
-    }
+    }while(0);
+
+}
+
+void EventLoop_Run()
+{
+    SINT ret = 0;
+    printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
     
+    ret = pthread_create(&el_threadId, NULL, EventLoop_exe, 0);
+    if(0 != ret) {
+        printf("pthread_create is Error!!!!!!!!!!!!!!!!!!!!!\n");
+    }
+    pthread_join(el_threadId,0);
 }
 
 EL_OPE_RST EventLoop_Exit()

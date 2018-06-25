@@ -9,7 +9,7 @@ CPLF = $(foreach dir, $(SUBDIRS), $(wildcard $(dir)/*.o))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
 os:$(OBJS)
-	$(CC) $(OBJS) -o $@
+	$(CC) $(OBJS) -o $@ $(CFLAGS)
 
 %.o:%.c
 	$(CC) -c -g $< -o $@ $(CFLAGS)
