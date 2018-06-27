@@ -55,7 +55,8 @@ static void* EventLoop_exe(void* data)
     UINT evt_count = List_count(s_loop->event);
     
     memset(&evt, 0x00, sizeof(Event));
-    printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
+    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
+    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
     do {
 
         if(0 == evt_count) {
@@ -73,7 +74,7 @@ static void* EventLoop_exe(void* data)
             }
         }
     }while(0);
-
+    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
 }
 
 void EventLoop_Run()
@@ -93,6 +94,11 @@ EL_OPE_RST EventLoop_Exit()
     s_runEnable = FALSE;
     printf("[%s:%d]\n",__FUNCTION__,__LINE__);
     return EL_OPE_RST_OK;
+}
+
+void EventLoop_Wakeup()
+{
+    
 }
 
 EL_OPE_RST EventLoop_SendEvent(Event* event)

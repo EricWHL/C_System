@@ -1,6 +1,6 @@
 /********************************
 *     need to develop
 ********************************/
-1.add clock system to wakeup eventloop
+1.add clock system to wakeup eventloop module
 
-2.
+2.add mutex into eventloop module

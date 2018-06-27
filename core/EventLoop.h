@@ -38,5 +38,7 @@ BOOL EventLoop_IsEmpty();
 void EventLoop_Run();
 EL_OPE_RST EventLoop_Exit();
 
+void EventLoop_Wakeup();
+
 EL_OPE_RST EventLoop_SendEvent(Event* event);
 #endif
