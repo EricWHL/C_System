@@ -7,9 +7,27 @@
 
 #include "EventLoop.h"
 
+/*************************************
+ *enum define
+ ************************************/
+
+
+/*************************************
+ *struct define
+ ************************************/
+
+typedef struct _ST_EL_THREAD_MGR
+{
+    pthread_t id;
+    pthread_mutex_t lock;		/* mutex ensuring exclusive access to eventloop and timer */
+    pthread_cond_t th_sig;	/* signaled to eventloop  */
+}ST_EL_THREAD_MGR;
+
+
 static EventLoop* s_loop = NULL;
 static BOOL s_runEnable = FALSE;
-static pthread_t el_threadId;
+
+static ST_EL_THREAD_MGR el_th_mgr;
 
 static void* EventLoop_exe(void* data);
 
@@ -24,9 +42,11 @@ void EventLoop_Create()
         s_loop->event = List_Create();
     }
     s_runEnable = TRUE;
+    pthread_mutex_init (&el_th_mgr.lock, NULL);
+    pthread_cond_init (&el_th_mgr.th_sig, NULL);
 
     Module_init();
-    
+
 }
 
 void EventLoop_Destory()
@@ -56,9 +76,13 @@ static void* EventLoop_exe(void* data)
     
     memset(&evt, 0x00, sizeof(Event));
     printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
-    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
-    do {
 
+
+    do {
+        printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);
+        pthread_cond_wait (&el_th_mgr.th_sig, &el_th_mgr.lock);
+        printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);
+        
         if(0 == evt_count) {
             Module_run(NULL);
         }
@@ -73,7 +97,7 @@ static void* EventLoop_exe(void* data)
                 evt_count --;
             }
         }
-    }while(0);
+    }while(1);
     printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
 }
 
@@ -82,11 +106,12 @@ void EventLoop_Run()
     SINT ret = 0;
     printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
     
-    ret = pthread_create(&el_threadId, NULL, EventLoop_exe, 0);
+    ret = pthread_create(&el_th_mgr.id, NULL, EventLoop_exe, 0);
     if(0 != ret) {
         printf("pthread_create is Error!!!!!!!!!!!!!!!!!!!!!\n");
     }
-    pthread_join(el_threadId,0);
+    Timer_Create();
+    pthread_join(el_th_mgr.id,0);
 }
 
 EL_OPE_RST EventLoop_Exit()
@@ -98,7 +123,8 @@ EL_OPE_RST EventLoop_Exit()
 
 void EventLoop_Wakeup()
 {
-    
+    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
+    pthread_cond_signal (&el_th_mgr.th_sig);
 }
 
 EL_OPE_RST EventLoop_SendEvent(Event* event)
