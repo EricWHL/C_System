@@ -15,6 +15,6 @@
 /*************************************
  *Functions define
  ************************************/
-void Timer_Create();
+void Timer_Create(OS_TIME_LOOP_RANGE time);
 void Timer_Run();
 #endif

@@ -1,6 +1,14 @@
 /********************************
 *     need to develop
 ********************************/
-1.add clock system to wakeup eventloop module
+1.add Module register progress
 
-2.add mutex into eventloop module
+2.add Timer manager system
+
+3.add filesystem manager system into os
+
+4.add os Manager module
+
+
+
+10.add log module
