@@ -75,13 +75,14 @@ static void* EventLoop_exe(void* data)
     UINT evt_count = List_count(s_loop->event);
     
     memset(&evt, 0x00, sizeof(Event));
-    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
+    printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
 
 
     do {
-        printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);
+        printf("[%s:%d]\n",__FUNCTION__,__LINE__);
         pthread_cond_wait (&el_th_mgr.th_sig, &el_th_mgr.lock);
-        printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);
+        printf("[%s:%d]\n",__FUNCTION__,__LINE__);
+        printf("[%s:%d]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",__FUNCTION__,__LINE__);
         
         if(0 == evt_count) {
             Module_run(NULL);
@@ -110,7 +111,7 @@ void EventLoop_Run()
     if(0 != ret) {
         printf("pthread_create is Error!!!!!!!!!!!!!!!!!!!!!\n");
     }
-    Timer_Create();
+    Timer_Create(OS_TIME_LOOP_RANGE_100MS);
     pthread_join(el_th_mgr.id,0);
 }
 
