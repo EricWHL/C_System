@@ -96,7 +96,7 @@ static void* Timer_Exe(void* data)
         }
         
         printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
-    }while(1);
+    }while(0);
 }
 
 void Timer_Create(OS_TIME_LOOP_RANGE time)

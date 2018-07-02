@@ -1,5 +1,5 @@
 #include <string.h>
-
+#include "Log.h"
 #include "Module.h"
 static ModuleMgr s_ModuleMgr;
 

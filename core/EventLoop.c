@@ -111,7 +111,7 @@ void EventLoop_Run()
     if(0 != ret) {
         printf("pthread_create is Error!!!!!!!!!!!!!!!!!!!!!\n");
     }
-    Timer_Create(OS_TIME_LOOP_RANGE_100MS);
+    Timer_Create(OS_TIME_LOOP_RANGE_1MS);
     pthread_join(el_th_mgr.id,0);
 }
 

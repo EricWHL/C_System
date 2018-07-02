@@ -4,9 +4,16 @@
 1.add Module register progress
 
 2.add Timer manager system
+->first release done
+need to modify
 
 3.add filesystem manager system into os
+->do it first
 
 4.add os Manager module
 
+5.Timer bugs modify and test
+
 10.add log module
+->first release done
+need to modify
