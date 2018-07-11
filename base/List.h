@@ -1,7 +1,7 @@
 #ifndef _LIST_H
 #define _LIST_H
 
-#include "com.h"
+#include "com_type.h"
 
 /*************************************
  *value define

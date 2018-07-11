@@ -5,6 +5,7 @@
 #include "com_type.h"
 #include "com_func.h"
 
+#include "com_base.h"
 #include "com_os.h"
-
+#include "com_core.h"
 #endif

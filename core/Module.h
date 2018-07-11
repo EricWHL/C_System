@@ -2,9 +2,6 @@
 #define _MODULE_H
 
 #include "com.h"
-#include "List.h"
-
-#include "Event.h"
 
 /*************************************
  *enum define
