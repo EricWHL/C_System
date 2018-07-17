@@ -8,12 +8,16 @@
 need to modify
 
 3.add filesystem manager system into os
-->first release done
-need to modify
+->add file interface into core
+
 
 4.add os Manager module
 
 5.Timer bugs modify and test
+
+6.add config file analysis module
+
+7.add memory manager into os 
 
 10.add log module
 ->first release done
