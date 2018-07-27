@@ -3,6 +3,7 @@
 
 #include "com_type.h"
 
-void ConfigAna_Init(UBYTE* file);
+
+void ConfigAna_Load(UBYTE* path);
 
 #endif
