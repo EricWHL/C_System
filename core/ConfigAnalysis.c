@@ -58,7 +58,7 @@ void ConfigAna_Load(UBYTE* path)
             if(NULL != cfgDir) {
                 
             }
-            printf("\n");
+            printf("is a dir\n");
         }
         else {
             printf("is a file\n");
