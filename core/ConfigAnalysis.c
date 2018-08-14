@@ -5,9 +5,6 @@
 
 #include "ConfigAnalysis.h"
 
-
-
-
 void ConfigAna_Load(UBYTE* path)
 {
     DIR* pathDir = NULL;

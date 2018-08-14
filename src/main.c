@@ -5,9 +5,10 @@
 #include "com.h"
 
 
-void OS_Help();
+void OS_HelpPro();
 void OS_ConfigPro(UBYTE* path);
 void OS_GenerateCodePro();
+void OS_UTPro();
 void OS_ParamPro(int argv, char** argc);
 
 int main (int argv, char** argc)
@@ -71,7 +72,12 @@ void OS_GenerateCodePro()
     
 }
 
-void OS_Help()
+void OS_UTPro()
+{
+    
+}
+
+void OS_HelpPro()
 {
     LOG("*================================================================* \n");
     LOG("*            This is a operation system for test                 * \n");
