@@ -39,7 +39,7 @@ void OS_ParamPro(int argv, char** argc)
             ||(0 == strcmp("-h",argc[idx]))
             ||(0 == strcmp("-help",argc[idx]))
             ||(0 == strcmp("--help",argc[idx]))) {
-            OS_Help();
+            OS_HelpPro();
         }
         else if((0 == strcmp("c",argc[idx]))
             ||(0 == strcmp("-c",argc[idx]))
