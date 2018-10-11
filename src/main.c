@@ -35,40 +35,57 @@ void OS_ParamPro(int argv, char** argc)
             ||(0 == strcmp("-h",argc[idx]))
             ||(0 == strcmp("-help",argc[idx]))
             ||(0 == strcmp("--help",argc[idx]))) {
+
             OS_HelpPro();
         }
+
         else if((0 == strcmp("c",argc[idx]))
             ||(0 == strcmp("-c",argc[idx]))
             ||(0 == strcmp("-config",argc[idx]))
             ||(0 == strcmp("--config",argc[idx]))) {
+
             OS_ConfigPro(argc[idx + 1]);
         }
+
         else if((0 == strcmp("g",argc[idx]))
             ||(0 == strcmp("-g",argc[idx]))
             ||(0 == strcmp("-gen",argc[idx]))
             ||(0 == strcmp("--generate-code",argc[idx]))) {
+
             OS_ConfigPro(argc[idx + 1]);
         }
-        else if((0 == strcmp("a",argc[idx]))
-                ||(0 == strcmp("-a",argc[idx]))
-                ||(0 == strcmp("-analy",argc[idx]))
-                ||(0 == strcmp("--analysis-file",argc[idx]))) {
-            OS_AnalysisPro(argc[idx + 1]);
-        }
+
         else if((0 == strcmp("t",argc[idx]))
                 ||(0 == strcmp("-t",argc[idx]))
                 ||(0 == strcmp("-test",argc[idx]))
                 ||(0 == strcmp("--testmode",argc[idx]))) {
             OS_TestModePro();
         }
+
+        else if((0 == strcmp("ut",argc[idx]))
+                ||(0 == strcmp("-ut",argc[idx]))
+                ||(0 == strcmp("-unittest",argc[idx]))) {
+
+            OS_UTPro();
+        }
+
         else if((0 == strcmp("r",argc[idx]))
                 ||(0 == strcmp("-r",argc[idx]))
                 ||(0 == strcmp("-run",argc[idx]))) {
 
             EventLoop_Create();
+
             EventLoop_Run();
 
             EventLoop_Exit();
+        }
+
+        else if((0 == strcmp("a",argc[idx]))
+                ||(0 == strcmp("-a",argc[idx]))
+                ||(0 == strcmp("-analy",argc[idx]))
+                ||(0 == strcmp("--analysis-file",argc[idx]))) {
+
+            OS_AnalysisPro(argc[idx + 1]);
         }
 
         else {
