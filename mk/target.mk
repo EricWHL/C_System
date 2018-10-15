@@ -15,4 +15,4 @@ os:$(OBJS)
 	$(CC) -c -g $< -o $@ $(CFLAGS)
 
 clean:
-	rm -rf *.bin *.exe $(CPLF)
+	rm -rf os *.bin *.exe $(CPLF)
