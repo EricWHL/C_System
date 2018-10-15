@@ -1,0 +1,16 @@
+/*
+
+The os config file format defination.
+
+Module type define:
+  TSK is the thread
+  CYC is the loop thread and  
+  
+Module priority define 1-255
+  1 is the highest priority 255 is the lowest
+  
+  Name    type    priority   stack size
+  [Power, TSK,    1          0x200      ]
+
+
+*/
