@@ -6,10 +6,11 @@
 
 
 void OS_HelpPro();
-void OS_ConfigPro(UBYTE* path);
 void OS_GenerateCodePro();
 void OS_UTPro();
 void OS_TestModePro();
+
+void OS_ConfigPro(UBYTE* path);
 void OS_ParamPro(int argv, char** argc);
 
 int main (int argv, char** argc)

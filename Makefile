@@ -5,6 +5,7 @@ LCFLAGS += -I$(TOP_DIR)/inc
 LCFLAGS += -I$(TOP_DIR)/core
 LCFLAGS += -I$(TOP_DIR)/tools
 LCFLAGS += -I$(TOP_DIR)/tools/CodeGen
+LCFLAGS += -I$(TOP_DIR)/tools/Analysis
 LCFLAGS += -lpthread
 
 SUBDIRS		=\
@@ -13,5 +14,6 @@ SUBDIRS		=\
 			src \
 			tools \
 			tools/CodeGen \
+			tools/Analysis \
 
 include $(TOP_DIR)/mk/target.mk
