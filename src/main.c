@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "com.h"
-
+#include "TMmain.h"
 
 void OS_HelpPro();
 void OS_GenerateCodePro();
@@ -60,7 +60,7 @@ void OS_ParamPro(int argv, char** argc)
                 ||(0 == strcmp("-t",argc[idx]))
                 ||(0 == strcmp("-test",argc[idx]))
                 ||(0 == strcmp("--testmode",argc[idx]))) {
-            OS_TestModePro();
+            TM_Main();
         }
 
         else if((0 == strcmp("ut",argc[idx]))
