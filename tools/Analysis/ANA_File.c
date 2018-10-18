@@ -4,9 +4,20 @@
 #include <sys/stat.h>
 #include <string.h>
 
-#include "ConfigAnalysis.h"
+#include "ANA_File.h"
 
-void ConfigAna_Load(UBYTE* path)
+static UBYTE** s_lastRstBuffer = NULL;
+
+/*
+  inline function defination.
+*/
+
+static ANA_FILE_OPE_RST ANA_File_ResultInsert(UBYTE* result);
+
+
+
+
+ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 {
     DIR* pathDir = NULL;
     DIR* cfgDir = NULL;
@@ -21,8 +32,14 @@ void ConfigAna_Load(UBYTE* path)
 
     if(NULL == path) {
         printf("config file path is NULL!\n");
+        return ;
     }
-
+    
+    if(NULL == extname) {
+        printf("config external file name is NULL!\n");
+        return ;
+    }
+    
     pathDir = opendir(path);
 
     if(NULL == pathDir) {
@@ -57,7 +74,7 @@ void ConfigAna_Load(UBYTE* path)
                 return ;
             }
 
-            ConfigAna_Load(filepath);
+            ANA_File_FindByExt(filepath, extname);
         }
         else {
             ext = strrchr(entry->d_name, '.');
@@ -68,10 +85,8 @@ void ConfigAna_Load(UBYTE* path)
             }
 
             if(NULL != ext) {
-                if(0 == strncmp(ext, "cfg", strlen("cfg"))) {
-                    printf("find the config file!!!!\n");
-                    printf("config file name is %s \n",filepath);
-
+                if(0 == strcmp(ext, extname)) {
+                    printf("file name is %s \n",filepath);
                     continue;
                 }
             }
@@ -82,4 +97,29 @@ void ConfigAna_Load(UBYTE* path)
     }
     closedir(pathDir);
 
+}
+
+static ANA_FILE_OPE_RST ANA_File_ResultInsert(UBYTE* result)
+{
+    
+    if(NULL == s_lastRstBuffer) {
+        
+    }
+    else {
+        if(NULL == result) {
+            return  ANA_FILE_OPE_RST_NULL;
+        }
+        else {
+            UBYTE* rstData = (UBYTE*)malloc(strlen(result));
+            if(!rstData)
+                return ANA_FILE_OPE_RST_DATA_MLC_ERR;
+            
+        }
+    }
+
+}
+
+void ANA_File_LastResult(UBYTE** result)
+{
+    result = s_lastRstBuffer;
 }
