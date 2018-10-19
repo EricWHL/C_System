@@ -36,7 +36,7 @@ int main (int argv, char** argc)
 {
 
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
-
+    ANA_Init();
     OS_ParamPro(argv, argc);
 
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
@@ -69,6 +69,7 @@ void OS_ParamPro(int argv, char** argc)
             ||(0 == strcmp("--config",argc[PRO_CMD_INDEX_1]))) {
 
         OS_ConfigPro(argc[PRO_CMD_INDEX_2], argc[PRO_CMD_INDEX_3]);
+
     }
 
     else if((0 == strcmp("g",argc[PRO_CMD_INDEX_1]))
@@ -124,6 +125,7 @@ void OS_ConfigPro(UBYTE* path, UBYTE* name)
     LOGI(path);
 
     ANA_File_FindByExt(path , name);
+
 }
 
 void OS_AnalysisPro(UBYTE* path)

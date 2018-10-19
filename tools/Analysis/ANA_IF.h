@@ -4,4 +4,6 @@
 #include "ANA_File.h"
 #include "ANA_Format.h"
 
+void ANA_Init();
+
 #endif

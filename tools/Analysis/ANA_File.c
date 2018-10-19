@@ -6,16 +6,48 @@
 
 #include "ANA_File.h"
 
-static UBYTE** s_lastRstBuffer = NULL;
+
+/*
+  inline defination.
+*/
+#define ANA_FILE_RST_WORD_FIND "find result:"
+
+/*
+  inline enum defination.
+*/
+
+/*
+  inline structure defination.
+*/
+
+typedef struct _ST_ANA_FILE_OPE_RST {
+    ANA_FILE_OPE_RST result;
+    ANA_FILE_OPE_RST_STS status;
+    ANA_FILE_OPE_RST_TYPE type;
+    UBYTE** buffer;
+}ST_ANA_FILE_OPE_RST;
+
+/*
+  inline variable defination.
+*/
+
+static ST_ANA_FILE_OPE_RST s_stFileResult;
 
 /*
   inline function defination.
 */
 
-static ANA_FILE_OPE_RST ANA_File_ResultInsert(UBYTE* result);
+static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE* result);
 
-
-
+void ANA_File_Init()
+{
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
+    s_stFileResult.result = ANA_FILE_OPE_RST_MAX;
+    s_stFileResult.status = ANA_FILE_OPE_RST_STS_MAX;
+    s_stFileResult.type = ANA_FILE_OPE_RST_TYPE_MAX;
+    s_stFileResult.buffer = NULL;
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
+}
 
 ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 {
@@ -87,6 +119,7 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
             if(NULL != ext) {
                 if(0 == strcmp(ext, extname)) {
                     printf("file name is %s \n",filepath);
+                    ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE_FIND, filepath);
                     continue;
                 }
             }
@@ -99,27 +132,65 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
 }
 
-static ANA_FILE_OPE_RST ANA_File_ResultInsert(UBYTE* result)
+static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE* result)
 {
+    UINT idx = 0;
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
     
-    if(NULL == s_lastRstBuffer) {
-        
-    }
-    else {
-        if(NULL == result) {
-            return  ANA_FILE_OPE_RST_NULL;
-        }
-        else {
-            UBYTE* rstData = (UBYTE*)malloc(strlen(result));
-            if(!rstData)
-                return ANA_FILE_OPE_RST_DATA_MLC_ERR;
-            
+    if(NULL == s_stFileResult.buffer) {
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        if(ANA_FILE_OPE_RST_TYPE_MAX == s_stFileResult.type) {
+            LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+            switch (type) {
+            case ANA_FILE_OPE_RST_TYPE_FIND:
+            {
+                LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+                UBYTE* tpData = (UBYTE*)malloc(strlen(ANA_FILE_RST_WORD_FIND));
+                LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+                if(!tpData)
+                    return ANA_FILE_OPE_RST_DATA_MLC_ERR;
+                LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+                memcpy(tpData, ANA_FILE_RST_WORD_FIND,strlen(ANA_FILE_RST_WORD_FIND));
+                s_stFileResult.buffer = tpData;
+                LOG("[%s:%d]buffer:%s \n", __FUNCTION__, __LINE__ ,s_stFileResult.buffer[0]);
+            }
+            break;
+            default:
+                break;
+            }
         }
     }
 
+    if(NULL == result) {
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        return  ANA_FILE_OPE_RST_NULL;
+    }
+    else {
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        UBYTE* rstData = (UBYTE*)malloc(strlen(result));
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        if(!rstData)
+            return ANA_FILE_OPE_RST_DATA_MLC_ERR;
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        memcpy(rstData, result, strlen(result));
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        UBYTE** tmp = s_stFileResult.buffer;
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        while(tmp){
+            tmp ++;
+        }
+        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
+        tmp = rstData;
+        LOG("[%s:%d] tmp:%s \n", __FUNCTION__, __LINE__,tmp);
+            
+    }
+    do {
+        printf("[%s%d] !!!!!!!!buffer:%s\n", __FUNCTION__, __LINE__, s_stFileResult.buffer[idx]);        idx ++;
+    }while(s_stFileResult.buffer[idx]);
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 }
 
 void ANA_File_LastResult(UBYTE** result)
 {
-    result = s_lastRstBuffer;
+    result = s_stFileResult.buffer;
 }
