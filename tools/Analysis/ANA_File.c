@@ -63,19 +63,19 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
     memset(cfgpath, 0x00, sizeof(cfgpath));
 
     if(NULL == path) {
-        printf("config file path is NULL!\n");
+        LOG("config file path is NULL!\n");
         return ;
     }
     
     if(NULL == extname) {
-        printf("config external file name is NULL!\n");
+        LOG("config external file name is NULL!\n");
         return ;
     }
     
     pathDir = opendir(path);
 
     if(NULL == pathDir) {
-        printf("open dir failed!\n");
+        LOG("open dir failed!\n");
     }
 
     while(entry = readdir(pathDir)) {
@@ -118,7 +118,7 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
             if(NULL != ext) {
                 if(0 == strcmp(ext, extname)) {
-                    printf("file name is %s \n",filepath);
+                    LOG("file name is %s \n",filepath);
                     ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE_FIND, filepath);
                     continue;
                 }
@@ -134,25 +134,22 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
 static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE* result)
 {
-    UINT idx = 0;
-    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
+    static UINT idx = 0;
     
     if(NULL == s_stFileResult.buffer) {
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
         if(ANA_FILE_OPE_RST_TYPE_MAX == s_stFileResult.type) {
-            LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
             switch (type) {
             case ANA_FILE_OPE_RST_TYPE_FIND:
             {
-                LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-                UBYTE* tpData = (UBYTE*)malloc(strlen(ANA_FILE_RST_WORD_FIND));
-                LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-                if(!tpData)
-                    return ANA_FILE_OPE_RST_DATA_MLC_ERR;
-                LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-                memcpy(tpData, ANA_FILE_RST_WORD_FIND,strlen(ANA_FILE_RST_WORD_FIND));
-                s_stFileResult.buffer = tpData;
-                LOG("[%s:%d]buffer:%s \n", __FUNCTION__, __LINE__ ,s_stFileResult.buffer[0]);
+                s_stFileResult.buffer = (UBYTE*)malloc(strlen(ANA_FILE_RST_WORD_FIND));
+                if(!s_stFileResult.buffer) {
+                    return  ANA_FILE_OPE_RST_NULL;
+                }
+                strncpy(s_stFileResult.buffer, ANA_FILE_RST_WORD_FIND, strlen(ANA_FILE_RST_WORD_FIND));
+                
+                idx ++;
+
+                s_stFileResult.type = ANA_FILE_OPE_RST_TYPE_FIND;
             }
             break;
             default:
@@ -162,32 +159,17 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
     }
 
     if(NULL == result) {
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
         return  ANA_FILE_OPE_RST_NULL;
     }
     else {
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-        UBYTE* rstData = (UBYTE*)malloc(strlen(result));
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-        if(!rstData)
+        s_stFileResult.buffer[idx] = (UBYTE*)malloc(strlen(result));
+
+        if(!s_stFileResult.buffer[idx])
             return ANA_FILE_OPE_RST_DATA_MLC_ERR;
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-        memcpy(rstData, result, strlen(result));
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-        UBYTE** tmp = s_stFileResult.buffer;
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-        while(tmp){
-            tmp ++;
-        }
-        LOG("[%s:%d] \n", __FUNCTION__, __LINE__);
-        tmp = rstData;
-        LOG("[%s:%d] tmp:%s \n", __FUNCTION__, __LINE__,tmp);
-            
+        strncpy(s_stFileResult.buffer[idx],result,strlen(result));
+        idx ++;
     }
-    do {
-        printf("[%s%d] !!!!!!!!buffer:%s\n", __FUNCTION__, __LINE__, s_stFileResult.buffer[idx]);        idx ++;
-    }while(s_stFileResult.buffer[idx]);
-    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
+    
 }
 
 void ANA_File_LastResult(UBYTE** result)
