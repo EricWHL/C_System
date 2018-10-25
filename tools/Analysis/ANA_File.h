@@ -46,6 +46,7 @@ typedef enum _ANA_FILE_OPE_RST_TYPE {
 void ANA_File_Init();
 
 ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname);
+ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename);
 
 void ANA_File_LastResult(UBYTE** result);
 

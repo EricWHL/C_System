@@ -132,10 +132,82 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
 }
 
+ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename)
+{
+    DIR* pathDir = NULL;
+    DIR* cfgDir = NULL;
+    UBYTE filepath[256];
+    UBYTE cfgpath[256];
+    
+    struct dirent* entry;
+    struct stat buf;
+    char* ext = NULL;
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
+    memset(cfgpath, 0x00, sizeof(cfgpath));
+
+    if(NULL == path) {
+        LOG("config file path is NULL!\n");
+        return ;
+    }
+    
+    if(NULL == filename) {
+        LOG("config external file name is NULL!\n");
+        return ;
+    }
+    
+    pathDir = opendir(path);
+
+    if(NULL == pathDir) {
+        LOG("open dir failed!\n");
+    }
+
+    while(entry = readdir(pathDir)) {
+
+        memset(filepath, 0x00, sizeof(filepath));
+        strcat(filepath, path);
+
+        if((0 == strcmp(".", entry->d_name))
+           ||(0 == strcmp("..", entry->d_name))) {
+            continue;
+        }
+
+        if('/' == filepath[strlen(filepath)-1]) {
+            strcat(filepath, entry->d_name);
+        }
+        else {
+            strcat(filepath, "/");
+            strcat(filepath, entry->d_name);
+        }
+
+        stat(filepath, &buf);
+
+        if(S_ISDIR(buf.st_mode)){
+
+            cfgDir = opendir(filepath);
+
+            if(NULL == cfgDir) {
+                return ;
+            }
+
+            ANA_File_FindByName(filepath, filename);
+        }
+        else {
+            if(0 == strncmp(entry->d_name, filename,strlen(filename))) {
+                LOG("file name is %s \n",filepath);
+                ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE_FIND, filepath);
+                continue;
+            }
+        }
+        continue;
+    }
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
+    closedir(pathDir);
+}
+
 static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE* result)
 {
     static UINT idx = 0;
-    
+    LOG("[%s:%d]IN idx :%d\n", __FUNCTION__, __LINE__,idx);
     if(NULL == s_stFileResult.buffer) {
         if(ANA_FILE_OPE_RST_TYPE_MAX == s_stFileResult.type) {
             switch (type) {
@@ -169,7 +241,7 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
         strncpy(s_stFileResult.buffer[idx],result,strlen(result));
         idx ++;
     }
-    
+    LOG("[%s:%d]OUT idx:%d \n", __FUNCTION__, __LINE__,idx);
 }
 
 void ANA_File_LastResult(UBYTE** result)

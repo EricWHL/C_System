@@ -120,11 +120,13 @@ void OS_ParamPro(int argv, char** argc)
 
 void OS_ConfigPro(UBYTE* path, UBYTE* name)
 {
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
     ASSERT(path);
 
     LOGI(path);
 
-    ANA_File_FindByExt(path , name);
+    ANA_File_FindByName(path , name);
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 
 }
 
