@@ -118,7 +118,7 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
             if(NULL != ext) {
                 if(0 == strcmp(ext, extname)) {
-                    LOG("file name is %s \n",filepath);
+                    LOG("file name is =>%s \n",filepath);
                     ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE_FIND, filepath);
                     continue;
                 }
@@ -193,7 +193,7 @@ ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename)
         }
         else {
             if(0 == strncmp(entry->d_name, filename,strlen(filename))) {
-                LOG("file name is %s \n",filepath);
+                LOG("file name is =>%s \n",filepath);
                 ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE_FIND, filepath);
                 continue;
             }
@@ -229,7 +229,7 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
             }
         }
     }
-
+    LOG("[%s:%d]-> idx :%d\n", __FUNCTION__, __LINE__,idx);
     if(NULL == result) {
         return  ANA_FILE_OPE_RST_NULL;
     }

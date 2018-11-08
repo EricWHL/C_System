@@ -29,6 +29,7 @@ void OS_UTPro();
 void OS_TestModePro();
 
 void OS_ConfigPro(UBYTE* path, UBYTE* name);
+void OS_FindConfigFilePro(UBYTE* path, UBYTE* name);
 
 void OS_ParamPro(int argv, char** argc);
 
@@ -48,7 +49,7 @@ void OS_ParamPro(int argv, char** argc)
 {
     int param = argv;
     int idx = 0;
-    
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);    
     do {
         LOG("argv: %d argc :%s\n", idx, argc[idx]);
         param --;
@@ -69,6 +70,15 @@ void OS_ParamPro(int argv, char** argc)
             ||(0 == strcmp("--config",argc[PRO_CMD_INDEX_1]))) {
 
         OS_ConfigPro(argc[PRO_CMD_INDEX_2], argc[PRO_CMD_INDEX_3]);
+
+    }
+
+    else if((0 == strcmp("f",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("-f",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("-findfile",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("--findfile",argc[PRO_CMD_INDEX_1]))) {
+
+        OS_FindConfigFilePro(argc[PRO_CMD_INDEX_2], argc[PRO_CMD_INDEX_3]);
 
     }
 
@@ -93,21 +103,21 @@ void OS_ParamPro(int argv, char** argc)
         OS_UTPro();
     }
 
-    else if((0 == strcmp("r",argc[idx]))
-            ||(0 == strcmp("-r",argc[idx]))
-            ||(0 == strcmp("-run",argc[idx]))) {
+    else if((0 == strcmp("r",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("-r",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("-run",argc[PRO_CMD_INDEX_1]))) {
 
-        EventLoop_Create();
+        OS_Init();
+        
+        OS_Run();
 
-        EventLoop_Run();
-
-        EventLoop_Exit();
+        OS_Exit();
     }
 
-    else if((0 == strcmp("a",argc[idx]))
-            ||(0 == strcmp("-a",argc[idx]))
-            ||(0 == strcmp("-analy",argc[idx]))
-            ||(0 == strcmp("--analysis-file",argc[idx]))) {
+    else if((0 == strcmp("a",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("-a",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("-analy",argc[PRO_CMD_INDEX_1]))
+            ||(0 == strcmp("--analysis-file",argc[PRO_CMD_INDEX_1]))) {
 
         OS_AnalysisPro(argc[PRO_CMD_INDEX_1]);
     }
@@ -115,6 +125,7 @@ void OS_ParamPro(int argv, char** argc)
     else {
             
     }
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 
 }
 
@@ -125,7 +136,19 @@ void OS_ConfigPro(UBYTE* path, UBYTE* name)
 
     LOGI(path);
 
-    ANA_File_FindByName(path , name);
+    ANA_File_FindByExt(path , name);
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
+
+}
+
+void OS_FindConfigFilePro(UBYTE* path, UBYTE* name)
+{
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
+    ASSERT(path);
+
+    LOGI(path);
+
+    ANA_File_FindByExt(path , name);
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 
 }

@@ -26,19 +26,10 @@ typedef struct _Module{
     CB_FUNC ptr;
 }Module;
 
-typedef struct _ModuleMgr {
-    List* module;    
-}ModuleMgr;
 
 /*************************************
  *functions define
  ************************************/
-void Module_init();
-ModuleMgr* Module_Inst();
 
-void Module_run(Event* event);
-
-void Module_register(Module* obj);
-void Module_unregister(Module* obj);
 
 #endif

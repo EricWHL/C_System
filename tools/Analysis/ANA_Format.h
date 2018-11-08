@@ -22,7 +22,7 @@
 #define ANA_WORD_DEF_COL  ':'
 #define ANA_WORD_DEF_QUO  '"'
 
-void ANA_FormatInit(char* filename);
+void ANA_FormatInit(char* filestream);
 
 
 

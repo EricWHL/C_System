@@ -45,8 +45,6 @@ void EventLoop_Create()
     pthread_mutex_init (&el_th_mgr.lock, NULL);
     pthread_cond_init (&el_th_mgr.th_sig, NULL);
 
-    Module_init();
-
 }
 
 void EventLoop_Destory()
@@ -69,7 +67,7 @@ BOOL EventLoop_IsEmpty()
 
 static void* EventLoop_exe(void* data)
 {
-    ModuleMgr* mdMgr = Module_Inst();
+    ModuleMgr* mdMgr = ModuleMgr_Inst();
     Node* node = NULL;
     Event evt;
     UINT evt_count = List_count(s_loop->event);
@@ -85,7 +83,7 @@ static void* EventLoop_exe(void* data)
         printf("[%s:%d]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",__FUNCTION__,__LINE__);
         
         if(0 == evt_count) {
-            Module_run(NULL);
+            mdMgr->run(NULL);
         }
         else {
             while(evt_count) {
@@ -93,7 +91,7 @@ static void* EventLoop_exe(void* data)
                 
                 memcpy(&evt, node->data, sizeof(Event));
 
-                Module_run(&evt);
+                mdMgr->run(&evt);
                 
                 evt_count --;
             }

@@ -8,4 +8,6 @@
 #include "com_base.h"
 #include "com_os.h"
 #include "com_core.h"
+#include "com_runtime.h"
+
 #endif
