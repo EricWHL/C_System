@@ -13,4 +13,7 @@ Module priority define 1-255
   [Power, TSK,    1          0x200      ]
 
 
+[OSTimer, CYC, 200]
+
+
 */

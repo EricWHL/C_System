@@ -1,0 +1,2 @@
+#module define
+[Name,type,priority,stacksize]

@@ -22,7 +22,13 @@
 #define ANA_WORD_DEF_COL  ':'
 #define ANA_WORD_DEF_QUO  '"'
 
+#define ANA_WORD_DEF_EXC  '!'
+#define ANA_WORD_DEF_WEL  '#'
+#define ANA_WORD_DEF_PEC  '%'
+
+
 void ANA_FormatInit(char* filestream);
+void ANA_FormatLoad(char* filestream);
 
 
 
