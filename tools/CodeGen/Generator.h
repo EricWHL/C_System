@@ -8,8 +8,7 @@ typedef enum GEN_CODE_ERR {
     GEN_CODE_ERR_MAX
 };
 
-
-
+void Gen_Init( UBYTE* format);
 
 void Gen_Code( UBYTE* cfgPath);
 #endif
