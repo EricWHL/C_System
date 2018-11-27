@@ -23,6 +23,8 @@ typedef enum  _PRO_CMD_INDEX {
     PRO_CMD_INDEX_MAX
 }PRO_CMD_INDEX;
 
+#define OS_PARAM_MAX (256)
+
 void OS_HelpPro();
 void OS_GenerateCodePro();
 void OS_UTPro();
@@ -49,7 +51,9 @@ void OS_ParamPro(int argv, char** argc)
 {
     int param = argv;
     int idx = 0;
-    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);    
+
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
+    
     do {
         LOG("argv: %d argc :%s\n", idx, argc[idx]);
         param --;
@@ -119,12 +123,13 @@ void OS_ParamPro(int argv, char** argc)
             ||(0 == strcmp("-analy",argc[PRO_CMD_INDEX_1]))
             ||(0 == strcmp("--analysis-file",argc[PRO_CMD_INDEX_1]))) {
 
-        OS_AnalysisPro(argc[PRO_CMD_INDEX_1]);
+        OS_AnalysisPro(argc[PRO_CMD_INDEX_2]);
     }
 
     else {
             
     }
+
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 
 }
@@ -155,7 +160,7 @@ void OS_FindConfigFilePro(UBYTE* path, UBYTE* name)
 
 void OS_AnalysisPro(UBYTE* path)
 {
-    
+    ANA_FormatInit(path);
 }
 
 void OS_TestModePro()

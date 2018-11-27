@@ -2,6 +2,8 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 #include <string.h>
 
 #include "ANA_File.h"
@@ -247,4 +249,24 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
 void ANA_File_LastResult(UBYTE** result)
 {
     result = s_stFileResult.buffer;
+}
+
+ANA_FILE_STS ANA_File_isExist(UBYTE* path)
+{
+    int fd = -1;
+    ASSERT(path);
+    
+    LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
+
+    fd = open (path, O_RDONLY);
+
+    if (-1 == fd) {
+        LOG("%s isn't exist!\n",path);
+        return ANA_FILE_STS_NOT_EXIST;
+    }
+    
+    close(fd);
+    
+    LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
+    return ANA_FILE_STS_EXIST;
 }

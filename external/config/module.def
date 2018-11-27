@@ -1,2 +1,4 @@
 #module define
-[Name,type,priority,stacksize]
+[name,type,priority,stacksize]
+#cycle module
+[name,type,function,time]

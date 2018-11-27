@@ -34,6 +34,12 @@ typedef enum _ANA_FILE_OPE_RST_TYPE {
     ANA_FILE_OPE_RST_TYPE_MAX
 }ANA_FILE_OPE_RST_TYPE;
 
+typedef enum _ANA_FILE_STS {
+    ANA_FILE_STS_EXIST = 0,
+    ANA_FILE_STS_NOT_EXIST,
+    ANA_FILE_STS_MAX
+}ANA_FILE_STS;
+
 /*
   Analysis module struct defination.
 */
@@ -47,6 +53,8 @@ void ANA_File_Init();
 
 ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname);
 ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename);
+
+ANA_FILE_STS ANA_File_isExist(UBYTE* path);
 
 void ANA_File_LastResult(UBYTE** result);
 
