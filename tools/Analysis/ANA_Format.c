@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "ANA_Format.h"
-
+#include "ANA_String.h"
 /*
 
   Analysis words defination.
@@ -32,14 +32,18 @@
 #define ANA_WORD_DEF_EXC  '!'
 #define ANA_WORD_DEF_WEL  '#'
 #define ANA_WORD_DEF_PEC  '%'
+#define ANA_WORD_DEF_RTN  '\n'
 
 #define ANA_FORMAT_BUF_SIZE_1K (1024)
+
+static UBYTE** s_rule;
 
 void ANA_FormatInit(char* filestream)
 {
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
 
     ASSERT(filestream);
+    s_rule = NULL;
 
     if(ANA_FILE_STS_EXIST == ANA_File_isExist(filestream)) {
         ANA_FormatLoad(filestream);
@@ -52,6 +56,7 @@ void ANA_FormatLoad(char* filestream)
     SINT fd = -1;
     UBYTE buffer[ANA_FORMAT_BUF_SIZE_1K];
     SINT readsize = 0;
+    UBYTE* tmp;
     
     ASSERT(filestream);
     memset(buffer, 0x00, ANA_FORMAT_BUF_SIZE_1K);
@@ -65,7 +70,11 @@ void ANA_FormatLoad(char* filestream)
         LOG("read buffer size : %d \n",readsize);
         LOG("--------------------------------------------\n");
         LOG("read buffer:\n%s--------------------------------------------\n",buffer);
-
+        tmp = ANA_SubString(buffer,ANA_WORD_DEF_WEL,ANA_WORD_DEF_RTN);
+        LOG("--------------------------------------------\n");
+        LOG("tmp:%s\n",tmp);
+        LOG("--------------------------------------------\n");
+        
     }
 
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
