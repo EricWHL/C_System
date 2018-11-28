@@ -57,6 +57,7 @@ void ANA_FormatLoad(char* filestream)
     UBYTE buffer[ANA_FORMAT_BUF_SIZE_1K];
     SINT readsize = 0;
     UBYTE* tmp;
+    UBYTE test;
     
     ASSERT(filestream);
     memset(buffer, 0x00, ANA_FORMAT_BUF_SIZE_1K);
@@ -70,7 +71,7 @@ void ANA_FormatLoad(char* filestream)
         LOG("read buffer size : %d \n",readsize);
         LOG("--------------------------------------------\n");
         LOG("read buffer:\n%s--------------------------------------------\n",buffer);
-        tmp = ANA_SubString(buffer,ANA_WORD_DEF_WEL,ANA_WORD_DEF_RTN);
+        tmp = ANA_SubStr(buffer,ANA_WORD_DEF_WEL,ANA_WORD_DEF_RTN);
         LOG("--------------------------------------------\n");
         LOG("tmp:%s\n",tmp);
         LOG("--------------------------------------------\n");

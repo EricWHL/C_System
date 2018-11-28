@@ -3,5 +3,12 @@
 
 #include "com.h"
 
-UBYTE* ANA_SubString(UBYTE*src, UBYTE from, UBYTE to);
+UBYTE* ANA_SubStr(UBYTE* src, UBYTE from, UBYTE to);
+
+UBYTE ANA_CharAt(UBYTE* src, UINT index);
+
+UINT ANA_Find(UBYTE* src, UBYTE c);
+UINT ANA_FindFirstOf(UBYTE* src, UBYTE c);
+UINT ANA_FindLastOf(UBYTE* src, UBYTE c);
+
 #endif
