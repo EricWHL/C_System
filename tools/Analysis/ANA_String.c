@@ -1,26 +1,33 @@
 #include <string.h>
 #include <stdlib.h>
+
 #include "ANA_String.h"
 
-UBYTE* ANA_SubStr(UBYTE* src, UBYTE from, UBYTE to)
+UBYTE* ANA_SubStr(UBYTE* p, UBYTE from, UBYTE to)
 {
-    ASSERT(src);
+    ASSERT(p);
     UBYTE* dst;
+    UBYTE* src = p;    
     UBYTE* tmp = (UBYTE*)malloc(strlen(src));
     ASSERT(tmp);
     
     memset(tmp,0x00,strlen(src));
 
     LOG("[%s:%d] IN\n",__FUNCTION__,__LINE__);
+    LOG("[%s:%d] src:%s\n",__FUNCTION__,__LINE__,src);
+    LOG("[%s:%d] from:%c\n",__FUNCTION__,__LINE__,from);
+    LOG("[%s:%d] to:%c\n",__FUNCTION__,__LINE__,to);
     while(*src != '\0') {
         if(from != *src) {
             if('\0'!= *tmp++) {
-                *tmp = *src++;
+                *tmp = *src;
             }
             if(to != *src) {
+                src++;
                 continue;
             }
             else {
+                *tmp = *src;
                 break;
             }
         }
@@ -34,7 +41,7 @@ UBYTE* ANA_SubStr(UBYTE* src, UBYTE from, UBYTE to)
             }
         }
     }
-
+    LOG("[%s:%d] dst:%s\n",__FUNCTION__,__LINE__,dst);
     LOG("[%s:%d] OUT\n",__FUNCTION__,__LINE__);
     return dst;
 
@@ -55,8 +62,8 @@ UINT ANA_Find(UBYTE* src, UBYTE c)
 
     UBYTE* p = src;
     while(c != *src++);
-
-    return (src-p-1);
+    LOG("[%s:%d]OUT rst:%d\n",__FUNCTION__,__LINE__,(src-p));
+    return (src-p);
 }
 
 UINT ANA_FindFirstOf(UBYTE* src, UBYTE c)

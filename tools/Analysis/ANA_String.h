@@ -3,7 +3,7 @@
 
 #include "com.h"
 
-UBYTE* ANA_SubStr(UBYTE* src, UBYTE from, UBYTE to);
+UBYTE* ANA_SubStr(UBYTE* p, UBYTE from, UBYTE to);
 
 UBYTE ANA_CharAt(UBYTE* src, UINT index);
 

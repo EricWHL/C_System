@@ -38,7 +38,9 @@
 
 static UBYTE** s_rule;
 
-void ANA_FormatInit(char* filestream)
+static void ANA_FormatAnaRule(UBYTE* format);
+
+void ANA_FormatInit(UBYTE* filestream)
 {
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
 
@@ -51,7 +53,7 @@ void ANA_FormatInit(char* filestream)
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 }
 
-void ANA_FormatLoad(char* filestream)
+void ANA_FormatLoad(UBYTE* filestream)
 {
     SINT fd = -1;
     UBYTE buffer[ANA_FORMAT_BUF_SIZE_1K];
@@ -74,6 +76,7 @@ void ANA_FormatLoad(char* filestream)
         tmp = ANA_SubStr(buffer,ANA_WORD_DEF_WEL,ANA_WORD_DEF_RTN);
         LOG("--------------------------------------------\n");
         LOG("tmp:%s\n",tmp);
+        ANA_FormatAnaRule(tmp);
         LOG("--------------------------------------------\n");
         
     }
@@ -81,3 +84,37 @@ void ANA_FormatLoad(char* filestream)
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
     
 }
+
+static void ANA_FormatAnaRule(UBYTE* format)
+{
+    ASSERT(format);
+    UBYTE* object = NULL;
+    UBYTE* item = NULL;
+    UBYTE itemindex = 0;
+    UBYTE i = 3;
+    LOG("[%s:%d]IN\n",__FUNCTION__,__LINE__);
+
+    while('\0' != *format) {
+        if(ANA_WORD_DEF_WEL == *format) {
+            format++;
+            continue;
+        }
+        if(ANA_WORD_DEF_MBKL == *format) {
+            object = ANA_SubStr(format,ANA_WORD_DEF_MBKL,ANA_WORD_DEF_MBKR);
+            LOG("[%s:%d]object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+            break;        
+        }
+    }
+
+    while(i){
+        LOG("[%s:%d]IN>>>itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
+        item = ANA_SubStr(object,*(object + itemindex + 1),object[ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM)-1]);
+        itemindex = ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM);
+        LOG("[%s:%d]item:%s\n",__FUNCTION__,__LINE__,item);
+        LOG("[%s:%d]OUT<<<itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
+        i--;
+    }
+    
+    LOG("[%s:%d]OUT\n",__FUNCTION__,__LINE__);
+}
+
