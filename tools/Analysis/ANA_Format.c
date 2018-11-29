@@ -91,7 +91,7 @@ static void ANA_FormatAnaRule(UBYTE* format)
     UBYTE* object = NULL;
     UBYTE* item = NULL;
     UBYTE itemindex = 0;
-    UBYTE i = 3;
+
     LOG("[%s:%d]IN\n",__FUNCTION__,__LINE__);
 
     while('\0' != *format) {
@@ -101,18 +101,25 @@ static void ANA_FormatAnaRule(UBYTE* format)
         }
         if(ANA_WORD_DEF_MBKL == *format) {
             object = ANA_SubStr(format,ANA_WORD_DEF_MBKL,ANA_WORD_DEF_MBKR);
-            LOG("[%s:%d]object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+            LOG("[%s:%d]>>>>object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
             break;        
         }
     }
-
-    while(i){
+    object = ANA_ReplaceChar(object, ANA_WORD_DEF_MBKL, ANA_WORD_DEF_COM);
+    LOG("[%s:%d]<<<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+    object = ANA_EraseIndex(object,0);
+    LOG("[%s:%d]<<<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+    object = ANA_ReplaceIndex(object,0,',');
+    LOG("[%s:%d]<<<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+    while(itemindex < strlen(object)){
         LOG("[%s:%d]IN>>>itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
-        item = ANA_SubStr(object,*(object + itemindex + 1),object[ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM)-1]);
-        itemindex = ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM);
+
+        item = ANA_SubStr(&object[itemindex],*(object + itemindex + 1),object[ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM)-1]);
+        
+        itemindex = ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM) + itemindex;
+        
         LOG("[%s:%d]item:%s\n",__FUNCTION__,__LINE__,item);
         LOG("[%s:%d]OUT<<<itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
-        i--;
     }
     
     LOG("[%s:%d]OUT\n",__FUNCTION__,__LINE__);

@@ -62,6 +62,7 @@ UINT ANA_Find(UBYTE* src, UBYTE c)
 
     UBYTE* p = src;
     while(c != *src++);
+    LOG("[%s:%d]IN src:%s c:%c\n",__FUNCTION__,__LINE__,src,c);
     LOG("[%s:%d]OUT rst:%d\n",__FUNCTION__,__LINE__,(src-p));
     return (src-p);
 }
@@ -80,4 +81,61 @@ UINT ANA_FindLastOf(UBYTE* src, UBYTE c)
     while(c != *p--);
 
     return (p - src +1);
+}
+
+UBYTE* ANA_EraseIndex(UBYTE* src, UINT index)
+{
+    ASSERT(src);
+    UBYTE* p = (UBYTE*)malloc(strlen(src));
+    UBYTE* it = src;
+    UBYTE* result = p;
+    ASSERT(p);
+    memset(p, 0x00, strlen(src));
+
+    while('\0'!= *src){
+        if(index != (src - it)) {
+            *p = *src++;
+            p++;
+            continue;
+        }
+        else {
+            src++;
+            *p = *src++;
+            p++;
+            continue;
+        }
+        
+    }
+
+    LOG("[%s:%d]OUT result:%s\n",__FUNCTION__,__LINE__,result);
+    return result;
+}
+
+UBYTE* ANA_ReplaceIndex(UBYTE* src, UINT index,UBYTE c)
+{
+    ASSERT(src);
+
+    *(src + index) = c;
+    LOG("[%s:%d]OUT result:%s\n",__FUNCTION__,__LINE__,src);
+    return src;
+    
+}
+
+UBYTE* ANA_ReplaceChar(UBYTE* src, UBYTE from, UBYTE to)
+{
+    UBYTE* rst = NULL;
+    
+    LOG("[%s:%d]IN src:%s from:%c to:%c\n",__FUNCTION__,__LINE__,src, from, to);
+    
+    ASSERT(src);
+    rst = src;
+    while('\0' != *src) {
+        if(from == *src) {
+            *src = to;
+        }
+        src++;
+    }
+
+    LOG("[%s:%d]OUT resule:%s\n",__FUNCTION__,__LINE__,rst);
+    return rst;
 }

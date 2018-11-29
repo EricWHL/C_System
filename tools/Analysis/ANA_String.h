@@ -11,4 +11,10 @@ UINT ANA_Find(UBYTE* src, UBYTE c);
 UINT ANA_FindFirstOf(UBYTE* src, UBYTE c);
 UINT ANA_FindLastOf(UBYTE* src, UBYTE c);
 
+UBYTE* ANA_EraseIndex(UBYTE* src, UINT index);
+
+UBYTE* ANA_ReplaceIndex(UBYTE* src, UINT index,UBYTE c);
+
+UBYTE* ANA_ReplaceChar(UBYTE* src, UBYTE from,UBYTE to);
+
 #endif
