@@ -105,12 +105,7 @@ static void ANA_FormatAnaRule(UBYTE* format)
             break;        
         }
     }
-    object = ANA_ReplaceChar(object, ANA_WORD_DEF_MBKL, ANA_WORD_DEF_COM);
-    LOG("[%s:%d]<<<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
-    object = ANA_EraseIndex(object,0);
-    LOG("[%s:%d]<<<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
-    object = ANA_ReplaceIndex(object,0,',');
-    LOG("[%s:%d]<<<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+
     while(itemindex < strlen(object)){
         LOG("[%s:%d]IN>>>itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
 
