@@ -136,6 +136,6 @@ UBYTE* ANA_ReplaceChar(UBYTE* src, UBYTE from, UBYTE to)
         src++;
     }
 
-    LOG("[%s:%d]OUT resule:%s\n",__FUNCTION__,__LINE__,rst);
+    LOG("[%s:%d]OUT result:%s\n",__FUNCTION__,__LINE__,rst);
     return rst;
 }

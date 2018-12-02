@@ -8,11 +8,6 @@
 
 #include "ANA_Format.h"
 #include "ANA_String.h"
-/*
-
-  Analysis words defination.
-  
- */
 
 #define ANA_WORD_DEF_BBKL '{'
 #define ANA_WORD_DEF_BBKR '}'
@@ -36,7 +31,7 @@
 
 #define ANA_FORMAT_BUF_SIZE_1K (1024)
 
-static UBYTE** s_rule;
+static ST_ANA_RULE_FORMAT *s_rule;
 
 static void ANA_FormatAnaRule(UBYTE* format);
 
@@ -45,11 +40,13 @@ void ANA_FormatInit(UBYTE* filestream)
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
 
     ASSERT(filestream);
-    s_rule = NULL;
 
     if(ANA_FILE_STS_EXIST == ANA_File_isExist(filestream)) {
         ANA_FormatLoad(filestream);
     }
+
+    s_rule = NULL;
+    
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 }
 
@@ -91,7 +88,6 @@ static void ANA_FormatAnaRule(UBYTE* format)
     UBYTE* object = NULL;
     UBYTE* item = NULL;
     UBYTE itemindex = 0;
-
     LOG("[%s:%d]IN\n",__FUNCTION__,__LINE__);
 
     while('\0' != *format) {
@@ -106,17 +102,48 @@ static void ANA_FormatAnaRule(UBYTE* format)
         }
     }
 
-    while(itemindex < strlen(object)){
+    object = ANA_ReplaceChar(object,ANA_WORD_DEF_MBKR, ANA_WORD_DEF_COM);
+    object = ANA_ReplaceChar(object,ANA_WORD_DEF_MBKL, ANA_WORD_DEF_COM);
+    LOG("[%s:%d]<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
+
+    while(itemindex < strlen(object) -1){
         LOG("[%s:%d]IN>>>itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
 
-        item = ANA_SubStr(&object[itemindex],*(object + itemindex + 1),object[ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM)-1]);
-        
+        item = ANA_SubStr(&object[itemindex +1], *(object + itemindex + 1), object[ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM)-1 + itemindex]);
         itemindex = ANA_Find(&object[itemindex+1],ANA_WORD_DEF_COM) + itemindex;
         
-        LOG("[%s:%d]item:%s\n",__FUNCTION__,__LINE__,item);
         LOG("[%s:%d]OUT<<<itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
     }
-    
+
     LOG("[%s:%d]OUT\n",__FUNCTION__,__LINE__);
 }
 
+UBYTE** ANA_RuleAnalysis(UBYTE* object)
+{
+    ASSERT(object);
+    UBYTE** result = NULL;
+    UBYTE* item = NULL;
+    UBYTE itemindex = 0;
+    UBYTE* tmp = (UBYTE*)malloc(strlen(object));
+    ASSERT(tmp);
+    LOG("[%s:%d]IN\n",__FUNCTION__,__LINE__);
+    memcpy(tmp,object,strlen(object));
+    
+    tmp = ANA_ReplaceChar(tmp, ANA_WORD_DEF_MBKR, ANA_WORD_DEF_COM);
+    tmp = ANA_ReplaceChar(tmp, ANA_WORD_DEF_MBKL, ANA_WORD_DEF_COM);
+    LOG("[%s:%d]<<<<<object:%s size:%d\n", __FUNCTION__, __LINE__, tmp, strlen(tmp));
+
+    while(itemindex < strlen(tmp) -1){
+        LOG("[%s:%d]IN>>>itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
+
+        item = ANA_SubStr(&tmp[itemindex +1], *(tmp + itemindex + 1), tmp[ANA_Find(&tmp[itemindex+1],ANA_WORD_DEF_COM)-1 + itemindex]);
+        itemindex = ANA_Find(&tmp[itemindex+1],ANA_WORD_DEF_COM) + itemindex;
+        
+        LOG("[%s:%d]OUT<<<itemindex:%d\n",__FUNCTION__,__LINE__,itemindex);
+    }
+
+    LOG("[%s:%d]OUT\n",__FUNCTION__,__LINE__);
+
+    free(tmp);
+        
+}
