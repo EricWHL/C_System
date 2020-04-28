@@ -66,14 +66,20 @@ void ANA_FormatLoad(UBYTE* filestream)
     fd = open (filestream, O_RDONLY);
     
     if(-1 != fd) {
+
         readsize = read(fd, buffer, ANA_FORMAT_BUF_SIZE_1K);
+
         LOG("read buffer size : %d \n",readsize);
         LOG("--------------------------------------------\n");
         LOG("read buffer:\n%s--------------------------------------------\n",buffer);
+
         tmp = ANA_SubStr(buffer,ANA_WORD_DEF_WEL,ANA_WORD_DEF_RTN);
+
         LOG("--------------------------------------------\n");
         LOG("tmp:%s\n",tmp);
+
         ANA_FormatAnaRule(tmp);
+
         LOG("--------------------------------------------\n");
         
     }
@@ -104,6 +110,7 @@ static void ANA_FormatAnaRule(UBYTE* format)
 
     object = ANA_ReplaceChar(object,ANA_WORD_DEF_MBKR, ANA_WORD_DEF_COM);
     object = ANA_ReplaceChar(object,ANA_WORD_DEF_MBKL, ANA_WORD_DEF_COM);
+
     LOG("[%s:%d]<<<<<object:%s size:%d\n",__FUNCTION__,__LINE__,object,strlen(object));
 
     while(itemindex < strlen(object) -1){
@@ -121,16 +128,21 @@ static void ANA_FormatAnaRule(UBYTE* format)
 UBYTE** ANA_RuleAnalysis(UBYTE* object)
 {
     ASSERT(object);
+
     UBYTE** result = NULL;
     UBYTE* item = NULL;
     UBYTE itemindex = 0;
     UBYTE* tmp = (UBYTE*)malloc(strlen(object));
+
     ASSERT(tmp);
+
     LOG("[%s:%d]IN\n",__FUNCTION__,__LINE__);
+
     memcpy(tmp,object,strlen(object));
     
     tmp = ANA_ReplaceChar(tmp, ANA_WORD_DEF_MBKR, ANA_WORD_DEF_COM);
     tmp = ANA_ReplaceChar(tmp, ANA_WORD_DEF_MBKL, ANA_WORD_DEF_COM);
+
     LOG("[%s:%d]<<<<<object:%s size:%d\n", __FUNCTION__, __LINE__, tmp, strlen(tmp));
 
     while(itemindex < strlen(tmp) -1){

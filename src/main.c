@@ -37,7 +37,6 @@ void OS_ParamPro(int argv, char** argc);
 
 int main (int argv, char** argc)
 {
-
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
     ANA_Init();
     OS_ParamPro(argv, argc);
