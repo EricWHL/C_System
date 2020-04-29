@@ -21,4 +21,6 @@ SUBDIRS		=\
 			tools/Analysis \
 			tools/TestMode \
 
+include $(TOP_DIR)/mk/cond.mk
+
 include $(TOP_DIR)/mk/target.mk
