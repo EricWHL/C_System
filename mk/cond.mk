@@ -1,20 +1,18 @@
 $(info  cond.mk execute start)
 
-DEBUG = 1
+DEBUG = 0
 
 define newline
 
 
 endef
 
-
-
-
-ifdef DEBUG
-INFO := DEBUG newline
+ifeq ($(DEBUG), 1)
+	INFO := DEBUG newline _assertmk
 else
-INFO := newline
+	INFO := newline
 endif
+
 
 $(info  $(INFO))
 
