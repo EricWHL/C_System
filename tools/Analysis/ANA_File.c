@@ -79,9 +79,12 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
     if(NULL == pathDir) {
         LOG("open dir failed!\n");
     }
+    else {
+        LOG("open dir successed!\n");
+    }
 
     while(entry = readdir(pathDir)) {
-
+        
         memset(filepath, 0x00, sizeof(filepath));
         strcat(filepath, path);
 
@@ -213,6 +216,7 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
     if(NULL == s_stFileResult.buffer) {
         if(ANA_FILE_OPE_RST_TYPE_MAX == s_stFileResult.type) {
             switch (type) {
+
             case ANA_FILE_OPE_RST_TYPE_FIND:
             {
                 s_stFileResult.buffer = (UBYTE*)malloc(strlen(ANA_FILE_RST_WORD_FIND));
@@ -226,15 +230,18 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
                 s_stFileResult.type = ANA_FILE_OPE_RST_TYPE_FIND;
             }
             break;
+
             default:
                 break;
             }
         }
     }
     LOG("[%s:%d]-> idx :%d\n", __FUNCTION__, __LINE__,idx);
+
     if(NULL == result) {
         return  ANA_FILE_OPE_RST_NULL;
     }
+
     else {
         s_stFileResult.buffer[idx] = (UBYTE*)malloc(strlen(result));
 
@@ -243,6 +250,7 @@ static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE*
         strncpy(s_stFileResult.buffer[idx],result,strlen(result));
         idx ++;
     }
+
     LOG("[%s:%d]OUT idx:%d \n", __FUNCTION__, __LINE__,idx);
 }
 

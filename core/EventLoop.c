@@ -21,6 +21,7 @@ typedef struct _ST_EL_THREAD_MGR
     pthread_t id;
     pthread_mutex_t lock;		/* mutex ensuring exclusive access to eventloop and timer */
     pthread_cond_t th_sig;	/* signaled to eventloop  */
+
 }ST_EL_THREAD_MGR;
 
 
@@ -128,4 +129,5 @@ void EventLoop_Wakeup()
 
 EL_OPE_RST EventLoop_SendEvent(Event* event)
 {
+    
 }
