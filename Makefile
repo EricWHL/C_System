@@ -10,6 +10,7 @@ LCFLAGS += -I$(TOP_DIR)/tools/Analysis
 LCFLAGS += -I$(TOP_DIR)/tools/TestMode
 LCFLAGS += -lpthread
 
+
 SUBDIRS		=\
 			base \
 			core \
@@ -19,5 +20,7 @@ SUBDIRS		=\
 			tools/CodeGen \
 			tools/Analysis \
 			tools/TestMode \
+
+include $(TOP_DIR)/mk/cond.mk
 
 include $(TOP_DIR)/mk/target.mk
