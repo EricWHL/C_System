@@ -21,6 +21,8 @@ typedef enum _LOG_LEVEL{
 #define LOGI(str) Log_Output(LOG_LEVEL_INFO, str)
 #define LOGW(str) Log_Output(LOG_LEVEL_WARN, str)
 
+#define LOGT(tag,fmt, ...) printf(tag,fmt, ## __VA_ARGS__)
+
 /*************************************
  *struct define
  ************************************/

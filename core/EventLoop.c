@@ -4,7 +4,7 @@
 #include <malloc.h>
 
 #include <pthread.h>
-
+#include "Log.h"
 #include "EventLoop.h"
 
 /*************************************
@@ -73,14 +73,14 @@ static void* EventLoop_exe(void* data)
     UINT evt_count = List_count(s_loop->event);
     
     memset(&evt, 0x00, sizeof(Event));
-    printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
+    LOG("[%s:%d]\n",__FUNCTION__,__LINE__);    
 
 
     do {
-        printf("[%s:%d]\n",__FUNCTION__,__LINE__);
+        LOG("[%s:%d]\n",__FUNCTION__,__LINE__);
         pthread_cond_wait (&el_th_mgr.th_sig, &el_th_mgr.lock);
-        printf("[%s:%d]\n",__FUNCTION__,__LINE__);
-        printf("[%s:%d]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",__FUNCTION__,__LINE__);
+        LOG("[%s:%d]\n",__FUNCTION__,__LINE__);
+        LOG("[%s:%d]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",__FUNCTION__,__LINE__);
         
         if(0 == evt_count) {
             mdMgr->run(NULL);
@@ -97,36 +97,35 @@ static void* EventLoop_exe(void* data)
             }
         }
     }while(1);
-    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
+    LOG("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
 }
 
 void EventLoop_Run()
 {
     SINT ret = 0;
-    printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
+    LOG("[%s:%d]\n",__FUNCTION__,__LINE__);    
     
     ret = pthread_create(&el_th_mgr.id, NULL, EventLoop_exe, 0);
     if(0 != ret) {
-        printf("pthread_create is Error!!!!!!!!!!!!!!!!!!!!!\n");
+        LOG("pthread_create is Error!!!!!!!!!!!!!!!!!!!!!\n");
     }
-    Timer_Create(OS_TIME_LOOP_RANGE_1MS);
+    Timer_Create(OS_TIME_LOOP_RANGE_10MS);
     pthread_join(el_th_mgr.id,0);
 }
 
 EL_OPE_RST EventLoop_Exit()
 {
     s_runEnable = FALSE;
-    printf("[%s:%d]\n",__FUNCTION__,__LINE__);
+    LOG("[%s:%d]\n",__FUNCTION__,__LINE__);
     return EL_OPE_RST_OK;
 }
 
 void EventLoop_Wakeup()
 {
-    printf("[%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
+    LOG("[Time:%d][%s:%d]\n",clock(),__FUNCTION__,__LINE__);    
     pthread_cond_signal (&el_th_mgr.th_sig);
 }
 
 EL_OPE_RST EventLoop_SendEvent(Event* event)
 {
-    
 }

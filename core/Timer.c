@@ -36,19 +36,19 @@ static TIMER_RANGE_TBL s_time_r_tbl[OS_TIME_LOOP_RANGE_MAX] = {
 static void* Timer_Exe(void* data)
 {
     struct timespec ts;
-    struct timespec cs;
+    struct timespec cs;    
     UINT i = 10;    
-    printf("[%s:%d]\n",__FUNCTION__,__LINE__);
-    printf("[%s:%d]last -> sec = %lld nsec = %lld\n",__FUNCTION__,__LINE__,lasttime.tv_sec, lasttime.tv_nsec);
-    clock_gettime (CLOCK_REALTIME, &cs);
+//    printf("[%s:%d]\n",__FUNCTION__,__LINE__);
+    //printf("[%s:%d]last -> sec = %lu nsec = %lu\n",__FUNCTION__,__LINE__,lasttime.tv_sec, lasttime.tv_nsec);
+    clock_gettime (CLOCK_MONOTONIC, &cs);
     memcpy(&lasttime, &cs, sizeof(struct timespec));
     
     do {
-        printf("[%s:%d]range-> %d\n",__FUNCTION__,__LINE__,s_clockrange);
-        printf("[%s:%d]last -> sec = %lld nsec = %lld\n",__FUNCTION__,__LINE__,lasttime.tv_sec, lasttime.tv_nsec);
+        //printf("[%s:%d]range-> %d\n",__FUNCTION__,__LINE__,s_clockrange);
+        //printf("[%s:%d]last    -> sec = %lu nsec = %lu\n",__FUNCTION__,__LINE__,lasttime.tv_sec, lasttime.tv_nsec);
        
-        if(0 == clock_gettime (CLOCK_REALTIME, &ts)) {
-            printf("[%s:%d]current -> sec = %lld nsec = %lld\n",__FUNCTION__,__LINE__,ts.tv_sec, ts.tv_nsec);
+        if(0 == clock_gettime (CLOCK_MONOTONIC, &ts)) {
+            //printf("[%s:%d]current -> sec = %lu nsec = %lu\n",__FUNCTION__,__LINE__,ts.tv_sec, ts.tv_nsec);
             switch (s_clockrange) {
             case OS_TIME_LOOP_RANGE_1MS:
             {
@@ -84,7 +84,7 @@ static void* Timer_Exe(void* data)
             break;
             case OS_TIME_LOOP_RANGE_10S:
             {
-                if((ts.tv_sec-lasttime.tv_sec) > 10) {
+                if((ts.tv_sec-lasttime.tv_sec) >= 10) {
                     EventLoop_Wakeup();
                     memcpy(&lasttime, &ts, sizeof(struct timespec));
                 }
@@ -95,8 +95,8 @@ static void* Timer_Exe(void* data)
             }
         }
         
-        printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
-    }while(0);
+        //      printf("[%s:%d]\n",__FUNCTION__,__LINE__);    
+    }while(1);
 }
 
 void Timer_Create(OS_TIME_LOOP_RANGE time)
@@ -108,6 +108,7 @@ void Timer_Create(OS_TIME_LOOP_RANGE time)
 
     s_clockrange = time;
     memset(&lasttime, 0x00, sizeof(struct timespec));
+    
     
     ret = pthread_create(&id, NULL, Timer_Exe, 0);
     if(0 != ret) {
