@@ -8,7 +8,7 @@ typedef struct _ST_ANA_RULE_FORMAT{
     UBYTE** item;
 }ST_ANA_RULE_FORMAT;
 
-void ANA_FormatInit(UBYTE* filestream);
+void ANA_FormatInit(UBYTE* fname);
 
 void ANA_FormatLoad(UBYTE* filestream);
 

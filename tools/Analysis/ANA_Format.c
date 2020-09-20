@@ -29,20 +29,24 @@
 #define ANA_WORD_DEF_PEC  '%'
 #define ANA_WORD_DEF_RTN  '\n'
 
-#define ANA_FORMAT_BUF_SIZE_1K (1024)
+#define ANA_FORMAT_BUF_SIZE_1K  (1024)
+#define ANA_FORMAT_BUF_SIZE_2K  (2*1024)
+#define ANA_FORMAT_BUF_SIZE_4K  (4*1024)
+#define ANA_FORMAT_BUF_SIZE_8K  (8*1024)
+#define ANA_FORMAT_BUF_SIZE_16K (16*1024)
 
 static ST_ANA_RULE_FORMAT *s_rule;
 
 static void ANA_FormatAnaRule(UBYTE* format);
 
-void ANA_FormatInit(UBYTE* filestream)
+void ANA_FormatInit(UBYTE* fname)
 {
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
 
-    ASSERT(filestream);
+    ASSERT(fname);
 
-    if(ANA_FILE_STS_EXIST == ANA_File_isExist(filestream)) {
-        ANA_FormatLoad(filestream);
+    if(ANA_FILE_STS_EXIST == ANA_File_isExist(fname)) {
+        ANA_FormatLoad(fname);
     }
 
     s_rule = NULL;
@@ -95,7 +99,10 @@ static void ANA_FormatAnaRule(UBYTE* format)
     UBYTE* item = NULL;
     UBYTE itemindex = 0;
     LOG("[%s:%d]IN\n",__FUNCTION__,__LINE__);
-
+    if(NULL == format) {
+        return;
+    }
+    
     while('\0' != *format) {
         if(ANA_WORD_DEF_WEL == *format) {
             format++;
