@@ -4,9 +4,9 @@
 #include "com.h"
 #include "ModuleManager.h"
 
-void OS_Init();
+void OS_Init(void);
 
-void OS_Run();
-void OS_Exit();
+void OS_Run(void);
+void OS_Exit(void);
 
 #endif 

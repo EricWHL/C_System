@@ -6,7 +6,7 @@
 
 #include "File.h"
 
-SINT File_Create(UBYTE* filename)
+SINT File_Create(BYTE* filename)
 {
     SINT fd = 0;
     
@@ -19,7 +19,7 @@ SINT File_Create(UBYTE* filename)
     return fd;
 }
 
-BOOL File_IsExist(UBYTE* filename)
+BOOL File_IsExist(BYTE* filename)
 {
     SINT fd = -1;
     BOOL ret = FALSE;

@@ -49,12 +49,12 @@ typedef enum _ANA_FILE_STS {
 /*
   Analysis module file operation function defination.
 */
-void ANA_File_Init();
+void ANA_File_Init(void);
 
-ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname);
-ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename);
+ANA_FILE_FIND_RST ANA_File_FindByExt(BYTE* path, BYTE* extname);
+ANA_FILE_FIND_RST ANA_File_FindByName(BYTE* path, BYTE* fname);
 
-ANA_FILE_STS ANA_File_isExist(UBYTE* path);
+ANA_FILE_STS ANA_File_isExist(BYTE* path);
 
 void ANA_File_LastResult(UBYTE** result);
 

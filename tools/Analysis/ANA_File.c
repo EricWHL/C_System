@@ -51,7 +51,7 @@ void ANA_File_Init()
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
 }
 
-ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
+ANA_FILE_FIND_RST ANA_File_FindByExt(BYTE* path, BYTE* extname)
 {
     DIR* pathDir = NULL;
     DIR* cfgDir = NULL;
@@ -66,12 +66,12 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
     if(NULL == path) {
         LOG("config file path is NULL!\n");
-        return ;
+        return ANA_FILE_FIND_RST_PATH_ERR;
     }
     
     if(NULL == extname) {
         LOG("config external file name is NULL!\n");
-        return ;
+        return ANA_FILE_FIND_RST_EXT_NAME_ERR;
     }
     
     pathDir = opendir(path);
@@ -108,7 +108,7 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
             cfgDir = opendir(filepath);
 
             if(NULL == cfgDir) {
-                return ;
+                return ANA_FILE_FIND_RST_PATH_ERR;
             }
 
             ANA_File_FindByExt(filepath, extname);
@@ -137,7 +137,7 @@ ANA_FILE_FIND_RST ANA_File_FindByExt(UBYTE* path, UBYTE* extname)
 
 }
 
-ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename)
+ANA_FILE_FIND_RST ANA_File_FindByName(BYTE* path, BYTE* filename)
 {
     DIR* pathDir = NULL;
     DIR* cfgDir = NULL;
@@ -152,12 +152,12 @@ ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename)
 
     if(NULL == path) {
         LOG("config file path is NULL!\n");
-        return ;
+        return ANA_FILE_FIND_RST_PATH_ERR;
     }
     
     if(NULL == filename) {
         LOG("config external file name is NULL!\n");
-        return ;
+        return ANA_FILE_FIND_RST_EXT_NAME_ERR;
     }
     
     pathDir = opendir(path);
@@ -191,7 +191,7 @@ ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename)
             cfgDir = opendir(filepath);
 
             if(NULL == cfgDir) {
-                return ;
+                return ANA_FILE_FIND_RST_PATH_ERR;
             }
 
             ANA_File_FindByName(filepath, filename);
@@ -207,6 +207,7 @@ ANA_FILE_FIND_RST ANA_File_FindByName(UBYTE* path, UBYTE* filename)
     }
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
     closedir(pathDir);
+    return ANA_FILE_FIND_RST_FIND;
 }
 
 static ANA_FILE_OPE_RST ANA_File_ResultInsert(ANA_FILE_OPE_RST_TYPE type, UBYTE* result)
@@ -259,7 +260,7 @@ void ANA_File_LastResult(UBYTE** result)
     result = s_stFileResult.buffer;
 }
 
-ANA_FILE_STS ANA_File_isExist(UBYTE* path)
+ANA_FILE_STS ANA_File_isExist(BYTE* path)
 {
     int fd = -1;
     ASSERT(path);

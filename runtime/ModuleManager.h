@@ -8,9 +8,9 @@ typedef struct _ModuleMgr {
     void (*run)(void* event);
 }ModuleMgr;
 
-void ModuleMgr_init();
+void ModuleMgr_init(void);
 void ModuleMgr_Run(void* event);
-ModuleMgr* ModuleMgr_Inst();
+ModuleMgr* ModuleMgr_Inst(void);
 
 void ModuleMgr_register(Module* obj);
 void ModuleMgr_unregister(Module* obj);

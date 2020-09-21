@@ -16,9 +16,9 @@ typedef enum _FILE_OPE_SEEK {
     FILE_OPE_SEEK_MAX
 }FILE_OPE_SEEK;
 
-SINT File_Create(UBYTE* filename);
+SINT File_Create(BYTE* filename);
 
-BOOL File_IsExist(UBYTE* filename);
+BOOL File_IsExist(BYTE* filename);
 
 FILE_OPE_ERR_STS File_Read(SINT fileid, POINTER buffer, UINT size);
 FILE_OPE_ERR_STS File_Write(SINT fileid, POINTER buffer, UINT size);

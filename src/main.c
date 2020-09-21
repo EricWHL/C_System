@@ -25,13 +25,13 @@ typedef enum  _PRO_CMD_INDEX {
 
 #define OS_PARAM_MAX (256)
 
-void OS_HelpPro();
-void OS_GenerateCodePro();
-void OS_UTPro();
-void OS_TestModePro();
+void OS_HelpPro(void);
+void OS_GenerateCodePro(void);
+void OS_UTPro(void);
+void OS_TestModePro(void);
 
-void OS_ConfigPro(UBYTE* path, UBYTE* name);
-void OS_FindConfigFilePro(UBYTE* path, UBYTE* name);
+void OS_ConfigPro(BYTE* path, BYTE* name);
+void OS_FindConfigFilePro(BYTE* path, BYTE* name);
 
 void OS_ParamPro(int argv, char** argc);
 
@@ -133,7 +133,7 @@ void OS_ParamPro(int argv, char** argc)
 
 }
 
-void OS_ConfigPro(UBYTE* path, UBYTE* name)
+void OS_ConfigPro(BYTE* path, BYTE* name)
 {
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
     ASSERT(path);
@@ -145,7 +145,7 @@ void OS_ConfigPro(UBYTE* path, UBYTE* name)
 
 }
 
-void OS_FindConfigFilePro(UBYTE* path, UBYTE* name)
+void OS_FindConfigFilePro(BYTE* path, BYTE* name)
 {
     LOG("[%s:%d]IN \n", __FUNCTION__, __LINE__);
     ASSERT(path);
