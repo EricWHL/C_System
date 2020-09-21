@@ -1,6 +1,7 @@
 #ifndef ANA_FORMAT_H
 #define ANA_FORMAT_H
 
+#include "ANA_Def.h"
 #include "ANA_File.h"
 
 typedef struct _ST_ANA_RULE_FORMAT{

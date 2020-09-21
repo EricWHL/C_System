@@ -1,4 +1,4 @@
 #module define
-[name,type,priority,stacksize]
+CRE_TASK[name,type,priority,stacksize]
 #cycle module
-[name,type,function,time]
+CRE_TASK[name,type,function,time]
