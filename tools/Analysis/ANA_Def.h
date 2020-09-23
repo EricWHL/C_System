@@ -1,6 +1,8 @@
 #ifndef _ANA_DEF_H
 #define _ANA_DEF_H
 
+#include "com.h"
+
 #define ANA_WORD_DEF_BBKL '{'
 #define ANA_WORD_DEF_BBKR '}'
 
@@ -26,11 +28,6 @@
 #define ANA_FORMAT_BUF_SIZE_4K  (4*1024)
 #define ANA_FORMAT_BUF_SIZE_8K  (8*1024)
 #define ANA_FORMAT_BUF_SIZE_16K (16*1024)
-
-
-
-#define ANA_TASK_NAME(name) TASK_##name
-
 
 
 #endif

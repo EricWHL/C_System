@@ -12,8 +12,8 @@ void ModuleMgr_init(void);
 void ModuleMgr_Run(void* event);
 ModuleMgr* ModuleMgr_Inst(void);
 
-void ModuleMgr_register(Module* obj);
-void ModuleMgr_unregister(Module* obj);
+void ModuleMgr_register(ST_Module* obj);
+void ModuleMgr_unregister(ST_Module* obj);
 
 
 

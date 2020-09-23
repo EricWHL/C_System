@@ -12,8 +12,8 @@ void IDE_CB_FUNC(void* event)
 
 void ModuleMgr_init()
 {
-    Module IDE;
-    memset(&IDE, 0x00 , sizeof(Module));
+    ST_Module IDE;
+    memset(&IDE, 0x00 , sizeof(ST_Module));
 
     strcpy(IDE.name,"IDE");
     IDE.id = 0;
@@ -23,7 +23,7 @@ void ModuleMgr_init()
     s_ModuleMgr.module = List_Create();
     ASSERT(s_ModuleMgr.module);
 
-    List_push(s_ModuleMgr.module,(void*)&IDE,sizeof(Module));
+    List_push(s_ModuleMgr.module,(void*)&IDE,sizeof(ST_Module));
     s_ModuleMgr.run = ModuleMgr_Run;
     
 }
@@ -31,10 +31,10 @@ void ModuleMgr_init()
 void ModuleMgr_Run(void* event)
 {
     UINT mdcount = 0;
-    Module md;
+    ST_Module md;
     Node* node = NULL;
     
-    memset(&md,0x00,sizeof(Module));
+    memset(&md,0x00,sizeof(ST_Module));
         
     if(NULL == s_ModuleMgr.module) {
         return ;
@@ -42,7 +42,7 @@ void ModuleMgr_Run(void* event)
     mdcount = List_count(s_ModuleMgr.module);
     node = s_ModuleMgr.module->node;
     while (mdcount) {
-        memcpy(&md,node->data,sizeof(Module));
+        memcpy(&md,node->data,sizeof(ST_Module));
         mdcount --;
         md.ptr(event);
         node = node->next;
@@ -62,12 +62,12 @@ ModuleMgr* ModuleMgr_Inst()
     }
 }
 
-void ModuleMgr_register(Module* obj)
+void ModuleMgr_register(ST_Module* obj)
 {
     
 }
 
-void ModuleMgr_unregister(Module* obj)
+void ModuleMgr_unregister(ST_Module* obj)
 {
     
 }
