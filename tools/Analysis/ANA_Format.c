@@ -8,7 +8,7 @@
 
 #include "ANA_Format.h"
 #include "ANA_String.h"
-
+#include "ANA_Rule.h"
 
 static ST_ANA_RULE_FORMAT *s_rule;
 
@@ -27,6 +27,7 @@ void ANA_FormatInit(UBYTE* fname)
     s_rule = NULL;
     
     LOG("[%s:%d]OUT \n", __FUNCTION__, __LINE__);
+    LOG("[%s:%d]OUT-> %s \n", __FUNCTION__, __LINE__,ANA_TASK_NAME("aaaaa"));
 }
 
 void ANA_FormatLoad(UBYTE* filestream)
